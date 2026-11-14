@@ -1,0 +1,6 @@
+{
+  "name": "THAMRA (ثمرة) — Smart Farming & NASA Farm Analytics",
+  "description": "THAMRA (ثمرة) AI agricultural platform for Bahrain and the region with Tamra bilingual voice assistant, adjustable farm & crop-section mapping, live NASA SMAP & POWER analytics, crop rotation planning, and farmer community.",
+  "requestFramePermissions": ["microphone", "geolocation"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

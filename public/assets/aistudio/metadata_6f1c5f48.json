@@ -1,0 +1,6 @@
+{
+  "name": "Tamra",
+  "description": "Tamra — Interactive AI Assistant with animated avatar, voice interaction, Python data analysis integration, and extensible application actions.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

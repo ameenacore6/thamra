@@ -1,0 +1,53 @@
+Crop,Botanical_Family,Rotation_Group,Legume_Flag,Perennial_Flag,SUIT VS,SUIT S,SUIT MS,Favourable Extent,Favourable Extent (%),Ymax,Suitability_Tier
+Barley,Poaceae,Cereal or grass,False,False,7.4,4.1,0.0,11.5,54.25,5396,Very suitable area available
+White potato,Solanaceae,Solanaceous crop,False,False,0.0,7.8,3.7,11.5,54.25,8521,Has favourable suitability
+Biomass sorghum,Poaceae,Cereal or grass,False,False,11.4,0.0,0.0,11.4,53.77,19371,Very suitable area available
+Jatropha,Euphorbiaceae,Other family,False,True,11.4,0.0,0.0,11.4,53.77,3403,Very suitable area available
+Sorghum,Poaceae,Cereal or grass,False,False,11.4,0.0,0.0,11.4,53.77,9071,Very suitable area available
+Sweet potato,Convolvulaceae,Other family,False,False,6.0,5.4,0.0,11.4,53.77,9885,Very suitable area available
+Wheat,Poaceae,Cereal or grass,False,False,6.0,5.4,0.0,11.4,53.77,4843,Very suitable area available
+Dry pea,Fabaceae,Legume,True,False,5.4,6.0,0.0,11.4,53.77,2780,Very suitable area available
+Gram,Fabaceae,Legume,True,False,5.4,6.0,0.0,11.4,53.77,2191,Very suitable area available
+Maize,Poaceae,Cereal or grass,False,False,5.4,6.0,0.0,11.4,53.77,12231,Very suitable area available
+Miscanthus,Poaceae,Cereal or grass,False,True,5.4,6.0,0.0,11.4,53.77,24516,Very suitable area available
+Pearl millet,Poaceae,Cereal or grass,False,False,5.4,6.0,0.0,11.4,53.77,3675,Very suitable area available
+Silage maize,Poaceae,Cereal or grass,False,False,5.4,6.0,0.0,11.4,53.77,15804,Very suitable area available
+Sunflower,Asteraceae,Other family,False,False,5.4,6.0,0.0,11.4,53.77,4062,Very suitable area available
+Alfalfa,Fabaceae,Legume,True,True,0.0,11.4,0.0,11.4,53.77,17783,Has favourable suitability
+Buckwheat,Polygonaceae,Other family,False,False,0.0,11.4,0.0,11.4,53.77,1193,Has favourable suitability
+Cabbage,Brassicaceae,Brassica,False,False,0.0,10.8,0.6,11.4,53.77,3813,Has favourable suitability
+Chickpea,Fabaceae,Legume,True,False,0.0,11.4,0.0,11.4,53.77,2557,Has favourable suitability
+Cowpea,Fabaceae,Legume,True,False,0.0,11.4,0.0,11.4,53.77,2217,Has favourable suitability
+Groundnut,Fabaceae,Legume,True,False,0.0,11.4,0.0,11.4,53.77,2891,Has favourable suitability
+Rapeseed,Brassicaceae,Brassica,False,False,0.0,11.4,0.0,11.4,53.77,2553,Has favourable suitability
+Sugar cane,Poaceae,Cereal or grass,False,True,0.0,11.4,0.0,11.4,53.77,9576,Has favourable suitability
+Wetland rice,Poaceae,Cereal or grass,False,False,0.0,11.4,0.0,11.4,53.77,7577,Has favourable suitability
+Cotton,Malvaceae,Other family,False,False,4.3,7.1,0.0,11.399999999999999,53.77,1136,Very suitable area available
+Carrot,Apiaceae,Other family,False,False,0.0,7.1,4.3,11.399999999999999,53.77,7755,Has favourable suitability
+Napier grass,Poaceae,Cereal or grass,False,True,0.0,7.1,4.3,11.399999999999999,53.77,21171,Has favourable suitability
+Onion,Amaryllidaceae,Other family,False,False,0.0,7.1,4.3,11.399999999999999,53.77,8195,Has favourable suitability
+Phaseolus bean,Fabaceae,Legume,True,False,0.0,7.1,4.3,11.399999999999999,53.77,2847,Has favourable suitability
+Pigeonpea,Fabaceae,Legume,True,False,0.0,7.1,4.3,11.399999999999999,53.77,2550,Has favourable suitability
+Soybean,Fabaceae,Legume,True,False,0.0,7.1,4.3,11.399999999999999,53.77,3943,Has favourable suitability
+Tomato,Solanaceae,Solanaceous crop,False,False,0.0,7.1,4.3,11.399999999999999,53.77,5523,Has favourable suitability
+Banana,Musaceae,Other family,False,True,0.0,1.1,9.7,10.799999999999999,50.94,5850,Has favourable suitability
+Cassava,Euphorbiaceae,Other family,False,False,0.0,7.1,0.0,7.1,33.49,7069,Has favourable suitability
+Citrus,Rutaceae,Other family,False,True,0.0,0.0,7.1,7.1,33.49,4252,Has favourable suitability
+Taro,Araceae,Other family,False,False,0.0,7.1,0.0,7.1,33.49,6530,Has favourable suitability
+Tobacco,Solanaceae,Solanaceous crop,False,False,0.0,0.0,7.1,7.1,33.49,889,Has favourable suitability
+Yam,Dioscoreaceae,Other family,False,False,0.0,7.1,0.0,7.1,33.49,6417,Has favourable suitability
+Cocoa,Malvaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Coconut,Arecaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Coffee,Rubiaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Dryland rice,Poaceae,Cereal or grass,False,False,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Flax,Linaceae,Other family,False,False,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Foxtail millet,Poaceae,Cereal or grass,False,False,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Oat,Poaceae,Cereal or grass,False,False,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Oil palm,Arecaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Olive,Oleaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Reed canary grass,Poaceae,Cereal or grass,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Rubber,Euphorbiaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Rye,Poaceae,Cereal or grass,False,False,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Sugar beet,Amaranthaceae,Other family,False,False,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Switchgrass,Poaceae,Cereal or grass,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited
+Tea,Theaceae,Other family,False,True,0.0,0.0,0.0,0.0,0.0,0,Not suitable / limited

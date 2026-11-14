@@ -1,0 +1,165 @@
+@import "tailwindcss";
+@import "leaflet/dist/leaflet.css";
+
+@layer base {
+  :root {
+    --font-display: "Plus Jakarta Sans", "IBM Plex Sans Arabic", system-ui, sans-serif;
+    --font-sans: "DM Sans", "IBM Plex Sans Arabic", system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+
+    /* User-provided Earth & Olive Palette + Extended Shades */
+    --tamra-disco-ball: #D5D5D5;
+    --tamra-porcini: #DBAE83;
+    --tamra-sandrift: #AD927E;
+    --tamra-ovoid-fruit: #8E7D49;
+    --tamra-obscure-olive: #535C21;
+    --tamra-midnight-pines: #1C250C;
+    --tamra-sage-mist: #EDF2E2;
+    --tamra-meadow-tint: #E2EAD2;
+    --tamra-moss-accent: #6F7C2E;
+    --tamra-cream-canvas: #F5F3EE;
+  }
+
+  html,
+  body {
+    font-family: var(--font-sans);
+    background-color: #f4f2ec;
+    background-image:
+      radial-gradient(at 12% 8%, rgba(111, 124, 46, 0.06) 0px, transparent 42%),
+      radial-gradient(at 88% 15%, rgba(219, 174, 131, 0.09) 0px, transparent 45%);
+    color: #1C250C;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+}
+
+.font-mono-tabular {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.leaflet-container {
+  font-family: var(--font-sans);
+  z-index: 1;
+}
+
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10;
+}
+
+/* Soft visual depth & interactive card polish */
+.thamra-card {
+  background: #ffffff;
+  border: 1px solid rgba(142, 125, 73, 0.24);
+  box-shadow: 0 2px 10px -2px rgba(28, 37, 12, 0.05), 0 1px 3px rgba(28, 37, 12, 0.03);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 180ms cubic-bezier(0.16, 1, 0.3, 1), border-color 180ms ease;
+}
+
+.thamra-card-interactive:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -4px rgba(28, 37, 12, 0.09), 0 2px 6px rgba(83, 92, 33, 0.06);
+  border-color: rgba(83, 92, 33, 0.42);
+}
+
+.thamra-botanical-dots {
+  background-image: radial-gradient(rgba(83, 92, 33, 0.09) 1px, transparent 1px);
+  background-size: 16px 16px;
+}
+
+@keyframes tamra-bob {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-2.5px) rotate(-1.5deg);
+  }
+}
+
+.animate-tamra-bob {
+  animation: tamra-bob 2.6s ease-in-out infinite;
+}
+
+@keyframes tamra-pulse-ring {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.65;
+  }
+  70% {
+    transform: scale(1.12);
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(0.95);
+    opacity: 0.65;
+  }
+}
+
+.animate-tamra-ring {
+  animation: tamra-pulse-ring 2.2s ease-in-out infinite;
+}
+
+@keyframes thamra-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-thamra-in {
+  animation: thamra-fade-in 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-tamra-bob,
+  .animate-tamra-ring,
+  .animate-tamra-in,
+  .animate-wave-float {
+    animation: none;
+  }
+  .thamra-card,
+  .thamra-card-interactive:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+.thamra-reduced-motion *,
+.thamra-reduced-motion *::before,
+.thamra-reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+}
+
+.thamra-large-text {
+  font-size: 112%;
+}
+
+.thamra-high-contrast {
+  filter: contrast(1.12);
+}
+
+@keyframes thamra-wave-float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-wave-float {
+  animation: thamra-wave-float 3.2s ease-in-out infinite;
+}

@@ -1,0 +1,18 @@
+Field,Description
+Combination_Rank,Ranking of the crop combination by its best provisional score. Rank 1 is highest.
+Crop_Combination,"The three crops included in the combination, stored alphabetically and regardless of planting order."
+Best_Score,Highest provisional screening score among the alternative sequences for this crop combination. Not a yield prediction or probability.
+Alternative_Sequences,"Alternative orders for the three crops, separated by semicolons."
+Number_of_Sequences,Number of alternative rotation sequences grouped under this crop combination.
+Legume_Crops,Legume crop or crops included in the combination.
+Family_Sequence,Botanical family order for the first listed alternative sequence only.
+Explanation,"Combination-level explanation. The score evaluates average crop-level characteristics, not planting-order effects."
+Rank,Ranking of an individual ordered rotation in the detailed rotation output.
+Crop_Rotation,The individual three-crop sequence in its listed order.
+Overall_Score,"Provisional weighted screening score from 0 to 100, calculated using the average crop-level component scores."
+Suitability_Score,Average normalized GAEZ favourable suitability score for the three crops.
+Very_Suitable_Score,Average normalized GAEZ very suitable extent score for the three crops.
+Heat_Score,"Average provisional heat-tolerance category score, normalized to 0–100."
+Water_Score,"Average provisional water-demand score, where lower water-demand categories receive higher screening scores."
+Irrigation_Required_For_Planning,Indicates that irrigation availability should be assessed before considering cultivation.
+Seasonal_Validation,Indicates that local planting-calendar validation is required.

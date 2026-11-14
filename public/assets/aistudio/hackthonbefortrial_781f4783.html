@@ -1,0 +1,643 @@
+<!-- Save this file as index.html and open it in Google Chrome.
+     It includes voice input, spoken replies, a simple farm advisor,
+     and a live NASA POWER climate-data request for Bahrain. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AGROSHIFT - Farm Advisor</title>
+
+<style>
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #101b17;
+    color: #edf5ef;
+}
+
+header {
+    padding: 22px 8%;
+    background: #172820;
+    border-bottom: 1px solid #344c3d;
+}
+
+header h1 {
+    margin: 0;
+    color: #a7df9b;
+    letter-spacing: 2px;
+}
+
+header p { color: #b8c9bd; margin-bottom: 0; }
+
+main {
+    max-width: 1050px;
+    margin: 35px auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+}
+
+.panel {
+    background: #1b2b23;
+    border: 1px solid #344c3d;
+    border-radius: 15px;
+    padding: 22px;
+}
+
+h2 { color: #a7df9b; margin-top: 0; }
+
+.avatar {
+    width: 105px;
+    height: 105px;
+    margin: 10px auto 18px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, #b8d9a8, #497d58);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    border: 4px solid #d2edc5;
+}
+
+.avatar.speaking {
+    animation: pulse .7s infinite alternate;
+}
+
+@keyframes pulse {
+    from { box-shadow: 0 0 5px #a7df9b; }
+    to { box-shadow: 0 0 25px #a7df9b; }
+}
+
+#status {
+    text-align: center;
+    color: #a7df9b;
+    min-height: 20px;
+    font-size: 13px;
+}
+
+.chat {
+    height: 300px;
+    overflow-y: auto;
+    background: #111e17;
+    border-radius: 10px;
+    padding: 13px;
+    margin-bottom: 12px;
+}
+
+.message {
+    padding: 11px 13px;
+    border-radius: 12px;
+    margin: 9px 0;
+    max-width: 90%;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.bot {
+    background: #294333;
+    margin-right: auto;
+}
+
+.user {
+    background: #426b4d;
+    margin-left: auto;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #52705a;
+    background: #111e17;
+    color: white;
+    margin: 7px 0 13px;
+}
+
+button {
+    background: #8fc982;
+    color: #102016;
+    border: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    margin: 4px 2px;
+}
+
+button:hover { background: #b2e5a6; }
+
+button.secondary {
+    background: #345340;
+    color: white;
+}
+
+button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.full { width: 100%; }
+
+.result {
+    background: #111e17;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 12px;
+    line-height: 1.6;
+}
+
+.stat {
+    color: #a7df9b;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.small {
+    color: #aebfb2;
+    font-size: 12px;
+}
+
+@media(max-width: 750px) {
+    main { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>AGROSHIFT</h1>
+    <p>NASA-powered agricultural decision support</p>
+</header>
+
+<main>
+
+    <section class="panel">
+        <h2>Your AI Farm Advisor</h2>
+
+        <div class="avatar" id="avatar">👩🏻‍🌾</div>
+        <div id="status">Ready to help</div>
+
+        <div class="chat" id="chat">
+            <div class="message bot">
+                Hello! I'm Amira, your farm advisor.
+                You can talk to me or type a question.
+                I can help you explore climate data, soil conditions
+                and crop rotation ideas for your farm.
+            </div>
+        </div>
+
+        <input id="userInput" placeholder="Ask Amira something..."
+               onkeydown="if(event.key==='Enter') sendMessage()">
+
+        <button onclick="sendMessage()">Send</button>
+        <button class="secondary" onclick="startListening()">🎙 Talk</button>
+        <button class="secondary" onclick="stopSpeaking()">Stop voice</button>
+
+        <p class="small">
+            Voice recognition depends on browser support and microphone permission.
+        </p>
+    </section>
+
+    <section class="panel">
+        <h2>Farm information</h2>
+
+        <label>Farm location</label>
+        <input id="location" value="Bahrain">
+
+        <label>Soil type</label>
+        <select id="soil">
+            <option value="Unknown">I don't know</option>
+            <option value="Sandy">Sandy</option>
+            <option value="Clay">Clay</option>
+            <option value="Loamy">Loamy</option>
+        </select>
+
+        <label>Current crop</label>
+        <select id="crop">
+            <option>Tomatoes</option>
+            <option>Cucumbers</option>
+            <option>Lettuce</option>
+            <option>Beans</option>
+            <option>Other / not planted</option>
+        </select>
+
+        <label>Water availability</label>
+        <select id="water">
+            <option value="Limited">Limited</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Good">Good</option>
+        </select>
+
+        <button class="full" onclick="analyseFarm()">
+            Analyse my farm
+        </button>
+
+        <div class="result" id="farmResult">
+            Your farm analysis will appear here.
+        </div>
+
+        <h2 style="margin-top:25px">NASA climate data</h2>
+
+        <button class="full" onclick="getNASAData()" id="nasaButton">
+            Get Bahrain climate data
+        </button>
+
+        <div class="result" id="nasaResult">
+            Press the button to request climate information from NASA POWER.
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Crop rotation ideas</h2>
+
+        <p class="small">
+            These are example rotation ideas, not validated planting recommendations.
+            Local growing conditions and crop varieties must be checked.
+        </p>
+
+        <div class="result">
+            <strong>Rotation 1</strong>
+            <p>Tomatoes → Beans → Lettuce</p>
+            <p class="small">Introduces a legume into the rotation.</p>
+        </div>
+
+        <div class="result">
+            <strong>Rotation 2</strong>
+            <p>Cucumbers → Beans → Tomatoes</p>
+            <p class="small">Alternates crop families.</p>
+        </div>
+
+        <div class="result">
+            <strong>Rotation 3</strong>
+            <p>Lettuce → Beans → Cucumbers</p>
+            <p class="small">Offers a different crop sequence to compare.</p>
+        </div>
+
+        <button class="full" onclick="compareRotations()">
+            Compare rotations
+        </button>
+
+        <div class="result" id="rotationResult">
+            Select compare to see the basic comparison.
+        </div>
+    </section>
+
+    <section class="panel">
+        <h2>Climate change simulator</h2>
+
+        <label>Increase in temperature</label>
+        <select id="temperature">
+            <option value="0">No increase</option>
+            <option value="1">+1°C</option>
+            <option value="2">+2°C</option>
+            <option value="3">+3°C</option>
+            <option value="4">+4°C</option>
+        </select>
+
+        <label>Rainfall change</label>
+        <select id="rainfall">
+            <option value="0">No change</option>
+            <option value="-10">10% less rainfall</option>
+            <option value="-20">20% less rainfall</option>
+            <option value="-30">30% less rainfall</option>
+            <option value="10">10% more rainfall</option>
+        </select>
+
+        <button class="full" onclick="runSimulation()">
+            Run simulation
+        </button>
+
+        <div class="result" id="simulationResult">
+            Change the conditions and run a scenario.
+        </div>
+    </section>
+
+</main>
+
+<script>
+const chat = document.getElementById("chat");
+const statusText = document.getElementById("status");
+const avatar = document.getElementById("avatar");
+
+let latestNASAData = null;
+let recognition = null;
+
+function addMessage(message, sender) {
+    const div = document.createElement("div");
+    div.className = "message " + sender;
+    div.textContent = message;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+}
+
+function speak(message) {
+    if (!("speechSynthesis" in window)) {
+        statusText.textContent = "Speech output is not supported in this browser.";
+        return;
+    }
+
+    speechSynthesis.cancel();
+
+    const utterance = new SpeechSynthesisUtterance(message);
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    const voices = speechSynthesis.getVoices();
+    const preferredVoice = voices.find(v =>
+        v.lang.startsWith("en") && /female|samantha|zira/i.test(v.name)
+    );
+
+    if (preferredVoice) utterance.voice = preferredVoice;
+
+    utterance.onstart = () => {
+        avatar.classList.add("speaking");
+        statusText.textContent = "Amira is speaking...";
+    };
+
+    utterance.onend = () => {
+        avatar.classList.remove("speaking");
+        statusText.textContent = "Ready to help";
+    };
+
+    speechSynthesis.speak(utterance);
+}
+
+function stopSpeaking() {
+    speechSynthesis.cancel();
+    avatar.classList.remove("speaking");
+    statusText.textContent = "Voice stopped";
+}
+
+function reply(message) {
+    addMessage(message, "bot");
+    speak(message);
+}
+
+function getFarmDetails() {
+    return {
+        location: document.getElementById("location").value,
+        soil: document.getElementById("soil").value,
+        crop: document.getElementById("crop").value,
+        water: document.getElementById("water").value
+    };
+}
+
+function sendMessage() {
+    const input = document.getElementById("userInput");
+    const question = input.value.trim();
+
+    if (!question) return;
+
+    addMessage(question, "user");
+    input.value = "";
+
+    const q = question.toLowerCase();
+    const farm = getFarmDetails();
+    let answer = "";
+
+    if (q.includes("hello") || q.includes("hi")) {
+        answer = "Hello! What would you like to know about your farm?";
+    }
+    else if (q.includes("nasa") || q.includes("climate") || q.includes("weather")) {
+        if (latestNASAData) {
+            answer = "The NASA POWER data request returned an average temperature of approximately "
+                + latestNASAData.temperature + " degrees Celsius for the selected period. "
+                + "This is regional climate information, not a measurement from your exact field.";
+        } else {
+            answer = "I can help with climate information. Press the NASA climate data button first "
+                + "to request real data for Bahrain.";
+        }
+    }
+    else if (q.includes("soil")) {
+        answer = "You selected " + farm.soil + " soil. Soil type affects drainage and water retention. "
+            + "A soil test would also help identify salinity, pH and nutrient levels. "
+            + "NASA satellite data cannot directly tell us all of these soil properties.";
+    }
+    else if (q.includes("water") || q.includes("irrigation")) {
+        answer = "You selected " + farm.water + " water availability. Water planning should compare "
+            + "crop water demand with irrigation supply. If water is limited, avoid choosing crops "
+            + "without checking their water requirements and local growing conditions.";
+    }
+    else if (q.includes("rotation") || q.includes("crop")) {
+        answer = "Your current crop is " + farm.crop + ". Crop rotation can help diversify crop families "
+            + "and may reduce some pest and disease pressures. A legume such as beans can contribute "
+            + "nitrogen to the system, depending on its growth and management. Press Compare rotations "
+            + "to see the example sequences.";
+    }
+    else if (q.includes("hot") || q.includes("temperature") || q.includes("warmer")) {
+        answer = "Higher temperatures can increase crop heat stress and water demand. You can test "
+            + "a temperature increase in the climate simulator. The result is a simple scenario, "
+            + "not a crop-yield prediction.";
+    }
+    else if (q.includes("analyse") || q.includes("analyze") || q.includes("farm")) {
+        analyseFarm();
+        answer = "I have displayed a basic farm analysis. It uses the information you entered, "
+            + "so the result will improve when you add measured soil and water information.";
+    }
+    else if (q.includes("help")) {
+        answer = "You can ask me about soil, irrigation, crop rotation, NASA data or climate change. "
+            + "You can also use the buttons on the page to analyse your farm and test future scenarios.";
+    }
+    else {
+        answer = "I don't have enough information to answer that accurately yet. "
+            + "Try asking me about your soil, water, crops, climate data or crop rotation.";
+    }
+
+    setTimeout(() => reply(answer), 300);
+}
+
+function startListening() {
+    const SpeechRecognition =
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        reply("Your browser does not support voice recognition. Please try Google Chrome.");
+        return;
+    }
+
+    recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+        statusText.textContent = "Listening...";
+    };
+
+    recognition.onresult = (event) => {
+        const spokenText = event.results[0][0].transcript;
+        document.getElementById("userInput").value = spokenText;
+        sendMessage();
+    };
+
+    recognition.onerror = (event) => {
+        statusText.textContent = "Microphone error: " + event.error;
+    };
+
+    recognition.onend = () => {
+        if (statusText.textContent === "Listening...") {
+            statusText.textContent = "Ready to help";
+        }
+    };
+
+    recognition.start();
+}
+
+function analyseFarm() {
+    const farm = getFarmDetails();
+
+    let advice = "Farm location: " + farm.location + "<br>";
+    advice += "Soil type: " + farm.soil + "<br>";
+    advice += "Current crop: " + farm.crop + "<br>";
+    advice += "Water availability: " + farm.water + "<br><br>";
+
+    if (farm.soil === "Sandy") {
+        advice += "Sandy soil often drains quickly, so irrigation and water retention need attention. ";
+    } else if (farm.soil === "Clay") {
+        advice += "Clay soil can retain more water, but drainage and soil structure should be checked. ";
+    } else if (farm.soil === "Loamy") {
+        advice += "Loamy soil can offer a balance of drainage and water retention. ";
+    } else {
+        advice += "A soil test would help identify your soil characteristics. ";
+    }
+
+    if (farm.water === "Limited") {
+        advice += "Because water availability is limited, carefully compare crop water demand with your supply.";
+    } else if (farm.water === "Moderate") {
+        advice += "Monitor irrigation use and avoid assuming that rainfall alone will meet crop demand.";
+    } else {
+        advice += "Good water availability can provide more flexibility, but efficient irrigation is still important.";
+    }
+
+    advice += "<br><br><span class='small'>This is preliminary guidance, not a professional soil assessment.</span>";
+
+    document.getElementById("farmResult").innerHTML = advice;
+}
+
+function compareRotations() {
+    document.getElementById("rotationResult").innerHTML =
+        "<strong>Rotation 1:</strong> Tomatoes → Beans → Lettuce<br>" +
+        "Introduces a legume and changes crop families.<br><br>" +
+        "<strong>Rotation 2:</strong> Cucumbers → Beans → Tomatoes<br>" +
+        "Provides a different crop-family sequence.<br><br>" +
+        "<strong>Rotation 3:</strong> Lettuce → Beans → Cucumbers<br>" +
+        "Offers another sequence to investigate.<br><br>" +
+        "These sequences are examples only. Before recommending one, " +
+        "check local planting seasons, crop varieties, soil salinity, " +
+        "water supply and pest or disease history.";
+}
+
+function runSimulation() {
+    const temperature = Number(document.getElementById("temperature").value);
+    const rainfall = Number(document.getElementById("rainfall").value);
+
+    let result = "";
+
+    if (temperature >= 3) {
+        result += "A temperature increase of " + temperature +
+            "°C could create substantial additional heat pressure for some crops. ";
+    } else if (temperature > 0) {
+        result += "A temperature increase of " + temperature +
+            "°C could increase heat exposure and crop water demand. ";
+    } else {
+        result += "Temperature is unchanged in this scenario. ";
+    }
+
+    if (rainfall < 0) {
+        result += "Rainfall is reduced by " + Math.abs(rainfall) +
+            "%. This could increase reliance on irrigation. ";
+    } else if (rainfall > 0) {
+        result += "Rainfall is increased by " + rainfall +
+            "%. Extra rainfall does not necessarily mean more usable water for crops. ";
+    } else {
+        result += "Rainfall is unchanged in this scenario. ";
+    }
+
+    result += "<br><br><strong>What to consider:</strong> Review crop heat tolerance, " +
+        "irrigation availability, soil moisture and the timing of the growing season. " +
+        "This is a qualitative scenario, not a scientific yield forecast.";
+
+    document.getElementById("simulationResult").innerHTML = result;
+}
+
+async function getNASAData() {
+    const button = document.getElementById("nasaButton");
+    const output = document.getElementById("nasaResult");
+
+    button.disabled = true;
+    output.textContent = "Requesting climate data from NASA POWER...";
+
+    // Example coordinates near Manama, Bahrain.
+    // Replace these with the actual farm coordinates.
+    const latitude = 26.0667;
+    const longitude = 50.5577;
+
+    const parameters = "T2M,T2M_MAX,PRECTOTCORR,RH2M";
+    const url =
+        "https://power.larc.nasa.gov/api/temporal/monthly/point" +
+        "?parameters=" + parameters +
+        "&community=AG" +
+        "&longitude=" + longitude +
+        "&latitude=" + latitude +
+        "&start=202401" +
+        "&end=202512" +
+        "&format=JSON";
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error("NASA API request failed: " + response.status);
+        }
+
+        const data = await response.json();
+        const values = data.properties.parameter;
+
+        const temperatures = Object.values(values.T2M).filter(v => v !== -999);
+        const maxTemperatures = Object.values(values.T2M_MAX).filter(v => v !== -999);
+        const rainfall = Object.values(values.PRECTOTCORR).filter(v => v !== -999);
+        const humidity = Object.values(values.RH2M).filter(v => v !== -999);
+
+        function average(array) {
+            return array.reduce((sum, value) => sum + value, 0) / array.length;
+        }
+
+        latestNASAData = {
+            temperature: average(temperatures).toFixed(1),
+            maxTemperature: average(maxTemperatures).toFixed(1),
+            rainfall: average(rainfall).toFixed(1),
+            humidity: average(humidity).toFixed(1)
+        };
+
+        output.innerHTML =
+            "<div class='stat'>" + latestNASAData.temperature + "°C</div>" +
+            "Average monthly air temperature<br><br>" +
+            "<strong>" + latestNASAData.maxTemperature + "°C</strong> – Average monthly maximum temperature<br>" +
+            "<strong>" + latestNASAData.rainfall + " mm</strong> – Average monthly precipitation<br>" +
+            "<strong>" + latestNASAData.humidity + "%</strong> – Average monthly relative humidity<br><br>" +
+            "<span class='small'>Source: NASA POWER API. Example coordinates near Manama. " +
+            "Period: 2024–2025. Regional data, not a measurement from an individual farm. " +
+            "Monthly values are averaged across the returned months.</span>";
+
+        reply("I retrieved climate data from NASA POWER. The average monthly temperature " +
+            "for the returned period is approximately " + latestNASAData.temperature +
+            " degrees Celsius. You can ask me to explain what this means for your farm.");
+
+    } catch (error) {
+        output.textContent =
+            "I couldn't retrieve NASA data. Check your internet connection and try again. " +
+            "Details: " + error.message;
+    } finally {
+        button.disabled = false;
+    }
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,164 @@
+
+FIELDSHIFT - TECHNICAL METHODOLOGY
+NASA SPACE APPS CHALLENGE 2026
+
+1. PROJECT PURPOSE
+
+FieldShift is a farm decision-support prototype designed to help
+farmers explore crop rotation alternatives using environmental
+observations and agricultural suitability information.
+
+The initial demonstration area is around Jasra Organic Farm,
+Bahrain. The location is a demonstration reference point and
+has not been confirmed as the actual cultivated field boundary.
+
+2. ENVIRONMENTAL DATA
+
+NASA POWER daily climate observations for 2025 were used to
+analyse maximum and minimum temperature, relative humidity,
+precipitation and solar radiation.
+
+Solar radiation is reported as an average daily value in
+kWh/m2/day. Annual rainfall is calculated by summing daily
+precipitation estimates.
+
+GPM IMERG V07 satellite precipitation estimates were extracted
+for 2025 and compared with NASA POWER rainfall estimates.
+The two datasets showed substantial differences. Both estimates
+are retained for comparison, and the discrepancy requires
+validation against reliable ground observations.
+
+3. SENTINEL-2 VEGETATION ANALYSIS
+
+Sentinel-2 Level-2A imagery was used to calculate the
+Normalized Difference Vegetation Index (NDVI).
+
+The red (B04) and near-infrared (B08) bands were used.
+The Scene Classification Layer (SCL) was applied to mask
+invalid, cloud, cirrus, shadow, snow and unclassified pixels.
+The SCL layer was aligned to the red-band grid using
+nearest-neighbour resampling before NDVI calculation.
+
+The analysis uses a small search area around the demonstration
+coordinates, not a verified farm polygon. The resulting NDVI
+is therefore an indicative vegetation measure for the search
+area, not a confirmed measurement of crop health or farm
+productivity. Residual classification errors may remain.
+
+4. AGRICULTURAL DATA
+
+FAO GAEZ crop suitability information for Bahrain was used
+to compare irrigated and rain-fed suitability scenarios.
+
+The GAEZ data used is at national geographic level and should
+not be interpreted as field-level suitability.
+
+A reference database of 52 crops was prepared, including
+botanical families, rotation groups and crop characteristics.
+
+Eight annual crops were selected for the initial rotation
+prototype. Heat-tolerance, water-demand and growing-season
+categories were assigned as provisional screening labels and
+require independent agronomic validation.
+
+5. ROTATION GENERATION
+
+Three-crop candidate sequences were generated using the
+selected annual crops.
+
+The prototype required:
+- Three different botanical families.
+- At least one legume.
+- No repeated botanical family in the cyclic sequence,
+  including the transition from the final crop back to the first.
+
+Circular duplicates were removed, resulting in 42 unique
+ordered circular sequences and 21 unique crop combinations.
+
+Alternative orders are retained for each crop combination.
+
+6. PROVISIONAL SCORING
+
+The prototype uses the following weighted screening factors:
+- GAEZ favourable suitability: 40 percent.
+- GAEZ very suitable extent: 15 percent.
+- Heat-tolerance category: 25 percent.
+- Water-demand category: 20 percent.
+
+Favourable suitability and very suitable extent are normalized
+against the maximum value among the eight selected crops.
+
+Heat and water categories are converted into numerical scores
+using provisional manually assigned category values.
+
+The overall score is calculated from the average component
+scores of the three crops in a rotation.
+
+IMPORTANT SCORING LIMITATION:
+The current score evaluates the average crop-level
+characteristics of a three-crop combination. It does not
+evaluate crop-to-crop interactions, soil nutrient effects,
+pest and disease breaks, or the agronomic effect of planting
+one crop before another.
+
+Consequently, alternative orders of the same three crops
+receive the same score. The score is a provisional screening
+indicator, not a sequence-specific agronomic evaluation,
+yield prediction or probability of successful cultivation.
+
+7. RECOMMENDATION OUTPUT
+
+The prototype ranks 21 unique crop combinations and provides
+42 alternative ordered sequences.
+
+The grouped recommendation output is intended for the
+interface. Its explanation describes the crop combination,
+while the alternative sequences are listed separately.
+
+The detailed rotation output contains individual sequences
+and their component scores.
+
+8. LIMITATIONS AND VALIDATION REQUIREMENTS
+
+- Scores are prototype screening scores, not yield predictions
+  or probabilities of successful cultivation.
+- Heat-tolerance, water-demand and growing-season categories
+  require agronomic validation.
+- The scoring model does not evaluate planting-order effects
+  or crop-to-crop interactions.
+- Local planting calendars and crop sequence timing require
+  validation.
+- The NDVI search area is not a verified farm boundary.
+- Sentinel-2 SCL masking reduces cloud and shadow contamination,
+  but residual classification errors may remain.
+- GPM rainfall estimates differed substantially from NASA POWER
+  and require validation against ground observations.
+- The selected GAEZ national rain-fed scenario reported no
+  favourable suitability for the 52 crops. This does not prove
+  that rain-fed cultivation is impossible.
+- GAEZ national-level suitability does not establish suitability
+  for an individual farm or field.
+- Irrigation availability, water quality, soil conditions and
+  actual farm management practices have not been assessed.
+- The original GAEZ source workbooks and external data access
+  dependencies are not included in the output CSV package.
+
+9. REPRODUCIBILITY
+
+The analysis notebook contains the extraction and processing
+workflow. Re-running the complete workflow may require the
+original GAEZ source workbooks, internet access, Sentinel-2
+data access, and Google Earth Engine authentication and
+project configuration.
+
+The CSV files in the handover package are exported results
+for use by the interface and project team.
+
+10. INTENDED USE
+
+FieldShift provides exploratory crop rotation options to
+support discussion and further investigation.
+
+It does not replace local agronomic advice, soil testing,
+irrigation assessment or verified farm-level suitability
+analysis.
